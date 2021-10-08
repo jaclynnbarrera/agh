@@ -8,7 +8,18 @@ class LocationsController < ApplicationController
     @@matches = []
 
     def index
-        binding.pry
+        if params[:lat]
+            # calls to get matches function with query params
+            get_matches(params["lat"], params["lng"], params["radius"])
+        else
+            render html: "please enter valid longitude, latitude and radius"
+        end
     end
+
+    #using test_location coordinates for testing purposes
+    def get_matches(lat,lng,radius)
+
+    end
+
 
 end
