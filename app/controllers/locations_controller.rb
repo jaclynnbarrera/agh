@@ -11,6 +11,7 @@ class LocationsController < ApplicationController
         if params[:lat]
             # calls to get matches function with query params
             get_matches(params["lat"], params["lng"], params["radius"])
+            render json: @@matches
         else
             render html: "please enter valid longitude, latitude and radius"
         end
@@ -20,6 +21,7 @@ class LocationsController < ApplicationController
         @@data_hash.each do |location|
             #using test_location coordinates for testing purposes
             if Geocoder::Calculations.distance_between([@@test_location["lat"],@@test_location["lng"]], [location["lat"], location["lng"]]) <= radius.to_f
+                @@matches.push(location)
                 open_weather(location)
             end
         end
