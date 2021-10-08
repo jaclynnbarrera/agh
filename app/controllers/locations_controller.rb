@@ -27,10 +27,10 @@ class LocationsController < ApplicationController
     end
 
     def open_weather(location)
-        binding.pry
         key = "ceb6657dfd5aab9f00e5b48bfde5c001"
         url = "https://api.openweathermap.org/data/2.5/weather?lat=#{location["lat"]}&lon=#{location["lng"]}&units=imperial&appid=#{key}"
         response = HTTParty.get(url)
+        binding.pry
     end
 
 end
