@@ -16,10 +16,21 @@ class LocationsController < ApplicationController
         end
     end
 
-    #using test_location coordinates for testing purposes
     def get_matches(lat,lng,radius)
-
+        @@data_hash.each do |location|
+            #using test_location coordinates for testing purposes
+            if Geocoder::Calculations.distance_between([@@test_location["lat"],@@test_location["lng"]], [location["lat"], location["lng"]]) <= radius.to_f
+                @@matches.push(location)
+                open_weather(location)
+            end
+        end
     end
 
+    def open_weather(location)
+        binding.pry
+        key = "ceb6657dfd5aab9f00e5b48bfde5c001"
+        url = "https://api.openweathermap.org/data/2.5/weather?lat=#{location["lat"]}&lon=#{location["lng"]}&units=imperial&appid=#{key}"
+        response = HTTParty.get(url)
+    end
 
 end
